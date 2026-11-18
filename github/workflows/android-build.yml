@@ -1,0 +1,43 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Check Android project source
+        run: |
+          if [ ! -f ./gradlew ]; then
+            echo 'Missing gradlew. Upload the original Android Studio project source first.'
+            exit 1
+          fi
+          chmod +x ./gradlew
+
+      - name: Build release APK
+        run: ./gradlew --no-daemon assembleRelease
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nhat-ky-ky-thuat-release-apk
+          path: '**/build/outputs/apk/release/*.apk'
+          if-no-files-found: error
