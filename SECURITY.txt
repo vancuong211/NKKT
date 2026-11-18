@@ -1,0 +1,3 @@
+KHÔNG ĐƯA KHÓA RIÊNG LÊN GITHUB.
+Không commit nhatky-signing-key.pem, *.jks, *.keystore, mật khẩu ký, google-services.json hoặc service-account key.
+File PEM được gửi trong cuộc trò chuyện là private key; không chia sẻ công khai. Muốn ký bản cập nhật cài đè cần đúng Android keystore/certificate đã dùng cho APK đang cài và phải xác minh chữ ký trước.
